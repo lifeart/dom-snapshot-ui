@@ -1,0 +1,9 @@
+<ul>
+    {{#each model as |snapshot|}}
+        <li>
+            <a href="#" {{action 'loadSnapshot' snapshot.id}}>{{snapshot.name}}</a>
+        </li>
+    {{/each}}
+</ul>
+
+{{yield}}

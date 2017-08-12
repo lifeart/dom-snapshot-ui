@@ -1,5 +1,6 @@
 {{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
+{{snapshot-list model=model loadSnapshot=(route-action 'loadSnapshot')}}
 {{!-- Feel free to remove this! --}}
 
+{{snapshot-viewer id="snapshot-viewer" sendNode=(route-action 'sendNode')}}
 {{outlet}}

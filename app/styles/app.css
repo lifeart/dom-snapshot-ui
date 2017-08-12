@@ -1,0 +1,13 @@
+.snapshot-viewer {
+    border-width: 0;
+    width: 70vw;
+    min-height: 70vh;
+}
+
+ul {
+    width: 30vh;
+}
+
+div {
+    display: inline-block;
+}
