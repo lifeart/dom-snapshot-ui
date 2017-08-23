@@ -7,7 +7,7 @@ export default Ember.Route.extend({
 
     this.snapshot.getBodyNode = () => {
       return this.viewNode;
-    }
+    };
 
     return this.snapshot.loaded();
 
