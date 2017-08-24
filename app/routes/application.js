@@ -13,14 +13,17 @@ export default Ember.Route.extend({
 
   },
   loadModel() {
+    this.existingElements = [];
+    const _this = this;
     return this.snapshot.firebase.database().ref('/snapshots-list').once('value').then(function(snapshot) {
       const snapshots =  snapshot.val();
+      _this.existingElements = Object.keys(snapshots);
       return Object.keys(snapshots).map(id=>{
         return {
           id: id,
           name: `snapshot - ${id}`
         }
-      });
+      }).reverse();
     });
   },
   model() {
@@ -28,6 +31,23 @@ export default Ember.Route.extend({
   },
   afterModel(model) {
     this._super(...arguments);
+
+    var snapshotsRef = this.snapshot.firebase.database().ref('/snapshots-list');
+    const _this = this;
+    snapshotsRef.limitToLast(1).on('child_added', function(data) {
+      const key = data.key;
+      if (!_this.existingElements.includes(key)) {
+        _this.send('reloadModel');
+      }
+    });
+
+    snapshotsRef.on('child_changed', function(data) {
+      console.log('child_changed',data, data.val());
+    });
+
+    snapshotsRef.on('child_removed', function(data) {
+      console.log('child_removed',data);
+    });
   },
   actions: {
     async removeSnapshot(id) {
@@ -36,6 +56,9 @@ export default Ember.Route.extend({
       }
       let indexRemove = await this.snapshot.firebase.database().ref('/snapshots-list/'+id).remove();
       let rootRemove = await this.snapshot.firebase.database().ref('/snapshots/'+id).remove();
+      this.send('reloadModel');
+    },
+    async reloadModel() {
       let newModel = await this.loadModel();
       this.controller.set('model', newModel);
     },
