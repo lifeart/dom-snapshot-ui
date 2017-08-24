@@ -12,7 +12,7 @@ export default Ember.Route.extend({
     return this.snapshot.loaded();
 
   },
-  model() {
+  loadModel() {
     return this.snapshot.firebase.database().ref('/snapshots-list').once('value').then(function(snapshot) {
       const snapshots =  snapshot.val();
       return Object.keys(snapshots).map(id=>{
@@ -23,28 +23,34 @@ export default Ember.Route.extend({
       });
     });
   },
+  model() {
+    return this.loadModel();
+  },
   afterModel(model) {
     this._super(...arguments);
-
-    // let modelHash = {};
-    //
-    // model.forEach(e=>{
-    //   modelHash[e.id] = {
-    //     visible: true
-    //   }
-    // });
-    //
-    // this.snapshot.firebase.database().ref(`/snapshots-list`).set(modelHash);
-    //
-
-    // console.log(arguments);
   },
   actions: {
+    async removeSnapshot(id) {
+      if (1503571368954 == id) {
+        return;
+      }
+      let indexRemove = await this.snapshot.firebase.database().ref('/snapshots-list/'+id).remove();
+      let rootRemove = await this.snapshot.firebase.database().ref('/snapshots/'+id).remove();
+      let newModel = await this.loadModel();
+      this.controller.set('model', newModel);
+    },
     loadSnapshot(id) {
-      this.snapshot.showSnapshot(id);
+      try {
+        this.viewNode.parentNode.querySelector('head').innerHTML = '';
+        this.viewNode.innerHTML = '<b>Loading...</b>';
+        this.snapshot.showSnapshot(id);
+      } catch (e) {
+        alert('Snapshot load error');
+      }
     },
     sendNode(node) {
       this.viewNode = node;
+      this.send('loadSnapshot', 1503571368954);
     }
   }
 });

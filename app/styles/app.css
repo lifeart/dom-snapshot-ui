@@ -1,13 +1,18 @@
 .snapshot-viewer {
     border-width: 0;
-    width: 70vw;
-    min-height: 70vh;
+    min-width: 20vw;
+    min-height: 20vh;
 }
 
-ul {
-    width: 30vh;
+#snapshot-viewer {
+  border-top-width: 8px;
+  max-width: calc(100vw - 2px - 200px);
+  position: fixed;
+  overflow-y: auto;
+  left: 20px;
+  top: 20px;
 }
 
-div {
-    display: inline-block;
+#snapshot-viewer iframe {
+  transform-origin: left top;
 }

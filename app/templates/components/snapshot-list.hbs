@@ -1,9 +1,18 @@
-<ul>
-    {{#each model as |snapshot|}}
-        <li>
-            <a href="#" {{action 'loadSnapshot' snapshot.id}}>{{snapshot.name}}</a>
-        </li>
-    {{/each}}
-</ul>
+{{#ui-dropdown class="selection" onChange=(action 'loadSnapshot')}}
+<div class="default text">Snapshot</div>
+<i class="dropdown icon"></i>
+<div class="menu">
+  {{#each model as |snapshot|}}
+  <div class="item" data-value="{{snapshot.id}}">
+    {{snapshot.name}}
+  </div>
+  {{/each}}
+</div>
+{{/ui-dropdown}}
 
+{{#if selectedSnapshot}}
+<button style="margin-left:5px;" class="ui icon button" onclick={{action 'removeSnapshot'}}>
+  <i class="trash icon"></i>
+</button>
+{{/if}}
 {{yield}}

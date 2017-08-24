@@ -1,2 +1,41 @@
+<div class="ui grid">
+
+<div class="row">
+  <div class="three wide column">
+  <div class="ui labeled input">
+    <div class="ui label">
+      width
+    </div>
+      {{input type="number"  placeholder="width" step="10" min="0" value=iframeWidth}}
+  </div>
+  </div>
+
+  <div class="three wide column">
+  <div class="ui labeled input">
+    <div class="ui label">
+      height
+    </div>
+    {{input type="number" placeholder="height" step="10" min="0" value=iframeHeight}}
+  </div>
+</div>
+
+  <div class="three wide column">
+  <div class="ui labeled input">
+    <div class="ui label">
+      scale
+    </div>
+    {{input type="number" placeholder="scale" step="0.05" min="0" value=scale}}
+  </div>
+</div>
+
+<div class="four wide column">
 {{yield}}
-<iframe id="myFrame" name="myFrame" class="snapshot-viewer"></iframe>
+</div>
+</div>
+
+
+
+<div class="row">
+<iframe id="myFrame" style="min-height:{{iframeHeight}}px;min-width:{{iframeWidth}}px;transform:scale({{scale}});" name="myFrame" class="snapshot-viewer"></iframe>
+</div>
+</div>
