@@ -1,0 +1,1 @@
+.snapshot-viewer{border-width:0;min-width:20vw;min-height:20vh}#snapshot-viewer{border-top-width:8px;max-width:calc(100vw - 2px - 200px);position:fixed;overflow-y:auto;left:20px;top:20px}#snapshot-viewer iframe{transform-origin:left top}
