@@ -7,7 +7,7 @@
 #snapshot-viewer {
   border-top-width: 8px;
   max-width: calc(100vw - 2px - 200px);
-  position: fixed;
+  position: absolute;
   overflow-y: auto;
   left: 20px;
   top: 20px;
@@ -15,4 +15,8 @@
 
 #snapshot-viewer iframe {
   transform-origin: left top;
+}
+
+.container {
+  margin-top: 20px !important;
 }
