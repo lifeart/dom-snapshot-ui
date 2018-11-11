@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   beforeModel() {
 
-    this.snapshot = new DomSnapshot();
+    this.snapshot = window.snapshoter;
 
     this.snapshot.getBodyNode = () => {
       return this.viewNode;
@@ -29,7 +29,7 @@ export default Ember.Route.extend({
   model() {
     return this.loadModel();
   },
-  afterModel(model) {
+  afterModel() {
     this._super(...arguments);
 
     var snapshotsRef = this.snapshot.firebase.database().ref('/snapshots-list');
