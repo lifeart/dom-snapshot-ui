@@ -36,7 +36,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-route-action-helper": "^2.0.5",
-    "ember-source": "~2.15.0-beta.2",
+    "ember-source": "~3.10.1",
     "loader.js": "^4.2.3",
     "semantic-ui-ember": "^2.0.1"
   },
