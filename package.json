@@ -35,7 +35,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-route-action-helper": "^2.0.5",
+    "ember-route-action-helper": "^2.0.8",
     "ember-source": "~3.16.0",
     "loader.js": "^4.7.0",
     "semantic-ui-ember": "^2.0.1"
