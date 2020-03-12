@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   beforeModel() {
 
     this.snapshot = window.snapshoter;
-
     this.snapshot.getBodyNode = () => {
       return this.viewNode;
     };
@@ -45,7 +44,7 @@ export default Ember.Route.extend({
       console.log('child_changed',data, data.val());
     });
 
-    snapshotsRef.on('child_removed', function(data) {
+    snapshotsRef.on('child_removed', (data) => {
       console.log('child_removed',data);
     });
   },
@@ -56,17 +55,28 @@ export default Ember.Route.extend({
       }
       let indexRemove = await this.snapshot.firebase.database().ref('/snapshots-list/'+id).remove();
       let rootRemove = await this.snapshot.firebase.database().ref('/snapshots/'+id).remove();
-      this.send('reloadModel');
+      let nextIndex = this.controller.model.indexOf(this.controller.model.find((el)=>el.id == id)) + 1;
+      this.send('reloadModel', this.controller.model[nextIndex].id);
     },
-    async reloadModel() {
+    async reloadModel(maybeId) {
       let newModel = await this.loadModel();
       this.controller.set('model', newModel);
+      if (maybeId) {
+        this.send('loadSnapshot', maybeId);
+      }
     },
     loadSnapshot(id) {
       try {
+        this.controller.set('selectedSnapshot', id);
         this.viewNode.parentNode.querySelector('head').innerHTML = '';
         this.viewNode.innerHTML = '<b>Loading...</b>';
-        this.snapshot.showSnapshot(id);
+        this.snapshot.showSnapshot(id).catch((e)=>{
+          if (confirm('Remove broken snapshot?')) {
+            this.send('removeSnapshot', id);
+          } else {
+            console.log(e);
+          }
+        });
       } catch (e) {
         alert('Snapshot load error');
       }

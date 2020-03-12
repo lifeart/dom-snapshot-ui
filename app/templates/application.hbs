@@ -1,11 +1,16 @@
 <div class="ui grid container">
   <div class="row">
-{{ember-gisty user="lifeart" gist="5a39eaead95248d10d554cd29b926361"}}
-  {{#snapshot-viewer id="snapshot-viewer" sendNode=(route-action 'sendNode')}}
-    {{snapshot-list model=model loadSnapshot=(route-action 'loadSnapshot') removeSnapshot=(route-action 'removeSnapshot')}}
-  {{/snapshot-viewer}}
+    <EmberGisty @user="lifeart" @gist="5a39eaead95248d10d554cd29b926361" />
+    <SnapshotViewer id="snapshot-viewer" @sendNode={{route-action "sendNode"}}>
+      <SnapshotList
+        @model={{this.model}}
+        @loadSnapshot={{route-action "loadSnapshot"}}
+        @removeSnapshot={{route-action "removeSnapshot"}}
+        @selectedSnapshot={{this.selectedSnapshot}}
+      />
+    </SnapshotViewer>
   </div>
   <div class="row">
-  {{outlet}}
+    {{outlet}}
   </div>
 </div>
